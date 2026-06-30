@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fresh Lemonade Co. - Refreshingly Delicious</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        /* Navigation */
+        nav {
+            position: sticky;
+            top: 0;
+            background: linear-gradient(135deg, #FFD93D 0%, #6BCB77 100%);
+            padding: 1rem 2rem;
+            z-index: 100;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            flex: 1;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease, text-shadow 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        nav a:hover {
+            transform: scale(1.1);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        /* Language Selector */
+        .language-selector {
+            position: relative;
+        }
+
+        .language-btn {
+            background: white;
+            color: #FF6B6B;
+            border: none;
+            padding: 0.7rem 1.2rem;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .language-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 150px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 8px;
+            top: 100%;
+            right: 0;
+            margin-top: 0.5rem;
+        }
+
+        .dropdown-content.show {
+            display: block;
+        }
+
+        .dropdown-content a {
+            color: #333;
+            padding: 0.8rem 1rem;
+            text-decoration: none;
+            display: block;
+            font-size: 0.95rem;
+            transition: background-color 0.3s ease;
+            border: none;
+            text-align: left;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f0f0f0;
+            transform: none;
+            text-shadow: none;
+        }
+
+        .dropdown-content a.active {
+            background-color: #FFD93D;
+            color: #333;
+            font-weight: 700;
+        }
+
+        /* Sections */
+        section {
+            padding: 4rem 2rem;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Home Section */
+        #home {
+            background: linear-gradient(135deg, #FFD93D 0%, #FF6B6B 100%);
+            color: white;
+            text-align: center;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .lemon-display {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            font-size: 5rem;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        #home h1 {
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+            animation: slideDown 0.8s ease-out;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        #home .tagline {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            animation: fadeIn 1s ease-out;
+            font-weight: 500;
+        }
+
+        #home p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            animation: fadeIn 1.2s ease-out;
+            max-width: 600px;
+        }
+
+        .cta-button {
+            background: white;
+            color: #FF6B6B;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: slideUp 0.8s ease-out;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        /* About Section */
+        #about {
+            background: linear-gradient(135deg, #6BCB77 0%, #4D96FF 100%);
+            color: white;
+        }
+
+        #about h2, #products h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            animation: slideDown 0.8s ease-out;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .about-content {
+            max-width: 800px;
+            text-align: center;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Products Section */
+        #products {
+            background: linear-gradient(135deg, #4D96FF 0%, #FFD93D 100%);
+            color: white;
+            flex-direction: column;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            width: 100%;
+            margin-top: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            color: #333;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .product-card:hover {
+            transform: scale(1.08) translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .product-emoji {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .product-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #FF6B6B;
+        }
+
+        .product-card p {
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            color: #666;
+        }
+
+        .price {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #FFD93D;
+            margin-bottom: 1rem;
+        }
+
+        .buy-btn {
+            background: linear-gradient(135deg, #FFD93D 0%, #FF6B6B 100%);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.3s ease;
+        }
+
+        .buy-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.95rem;
+        }
+
+        /* Animations */
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+            }
+
+            nav a {
+                font-size: 0.95rem;
+            }
+
+            #home h1 {
+                font-size: 2.5rem;
+            }
+
+            #home p {
+                font-size: 1rem;
+            }
+
+            .lemon-display {
+                font-size: 3rem;
+            }
+
+            #about h2, #products h2 {
+                font-size: 2rem;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 2rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a onclick="scrollToSection('home')">🏠 <span data-en="Home" data-ms="Rumah" data-ta="வீடு" data-zh="首页"></span></a></li>
+            <li><a onclick="scrollToSection('about')">ℹ️ <span data-en="About Us" data-ms="Tentang Kami" data-ta="எங்களை பற்றி" data-zh="关于我们"></span></a></li>
+            <li><a onclick="scrollToSection('products')">🍋 <span data-en="Products" data-ms="Produk" data-ta="பொருட்கள்" data-zh="产品"></span></a></li>
+        </ul>
+
+        <!-- Language Selector -->
+        <div class="language-selector">
+            <button class="language-btn" onclick="toggleLanguageDropdown()">
+                🌐 <span id="currentLang">English</span>
+            </button>
+            <div class="dropdown-content" id="languageDropdown">
+                <a class="lang-option active" data-lang="en" onclick="changeLanguage('en')">🇺🇸 English</a>
+                <a class="lang-option" data-lang="ms" onclick="changeLanguage('ms')">🇲🇾 Bahasa Melayu</a>
+                <a class="lang-option" data-lang="ta" onclick="changeLanguage('ta')">🇮🇳 தமிழ்</a>
+                <a class="lang-option" data-lang="zh" onclick="changeLanguage('zh')">🇨🇳 中文</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home">
+        <div class="lemon-display">🍋 🍋 🍋</div>
+        <h1 data-en="Fresh Lemonade Co." data-ms="Syarikat Lemonad Segar" data-ta="பெற்ற எலுமிச்சை நிறுவனம்" data-zh="新鲜柠檬水公司">Fresh Lemonade Co.</h1>
+        <p class="tagline" data-en="Made with Love, Served with Freshness!" data-ms="Dibuat dengan Kasih, Disajikan dengan Kesegaran!" data-ta="அன்புடன் செய்யப்பட்ட, புதுமையுடன் பরிமாறப்பட்ட!" data-zh="用爱制作，以新鲜奉献！">Made with Love, Served with Freshness!</p>
+        <p data-en="Welcome to your favorite neighborhood lemonade stand! 💛 We craft delicious, naturally made lemonades using only the freshest lemons and finest ingredients. Perfect for hot Malaysian days!" data-ms="Selamat datang ke kedai limau kesayangan anda! 💛 Kami membuat limau yang lezat dan semula jadi menggunakan hanya limau segar dan bahan-bahan terbaik. Sempurna untuk hari panas Malaysia!" data-ta="உங்கள் பிரிய அயலறு எலுமிச்சை நிலையத்திற்கு வரவேற்கிறோம்! 💛 மிக சமீபத்திய எலுமிச்சை மற்றும் சிறந்த பொருட்களைப் பயன்படுத்தி맛 சுவையான, இயற்கையாக செய்யப்பட்ட எலுமிச்சை செய்கிறோம். மலேசியாவின் வெப்பமான நாட்களுக்கு சிறந்தது!" data-zh="欢迎来到您最喜欢的邻里柠檬水摊！💛 我们用最新鲜的柠檬和最好的原料制作美味的天然柠檬水。非常适合马来西亚炎热的日子！">Welcome to your favorite neighborhood lemonade stand! 💛 We craft delicious, naturally made lemonades using only the freshest lemons and finest ingredients. Perfect for hot Malaysian days!</p>
+        <button class="cta-button" onclick="scrollToSection('products')" data-en="✨ Explore Our Refreshing Products" data-ms="✨ Jelajahi Produk Kami yang Menyegarkan" data-ta="✨ எங்கள் புதுமையான பொருட்களை অন்வேষணம் செய்யுங்கள்" data-zh="✨ 探索我们清爽的产品">✨ Explore Our Refreshing Products</button>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div>
+            <h2 data-en="About Us" data-ms="Tentang Kami" data-ta="எங்களை பற்றி" data-zh="关于我们">About Us</h2>
+            <div class="about-content">
+                <p data-en="👋 Halo! Welcome to Fresh Lemonade Co., your go-to place for naturally delicious lemonade. We've been serving our wonderful Malaysian community since 2015 with freshly squeezed lemons, pure spring water, and natural ingredients. No artificial flavors, no nasty preservatives—just pure, refreshing goodness! We're committed to bringing smiles and quenching thirsts, one glass at a time. Every sip is a taste of happiness! 😊" data-ms="👋 Halo! Selamat datang ke Fresh Lemonade Co., tempat pilihan anda untuk lemonade yang lezat secara semula jadi. Kami telah melayani komuniti Malaysia yang indah sejak 2015 dengan limau yang diperas segar, air mata air tulen, dan bahan-bahan semula jadi. Tiada rasa tiruan, tiada pengawet buruk—hanya kebaikan murni dan menyegarkan! Kami berkomitmen untuk membawa senyuman dan memuaskan kehausan, satu gelas pada satu masa. Setiap tegukan adalah rasa kebahagiaan! 😊" data-ta="👋 வணக்கம்! பெற்ற எலுமிச்சை நிறுவனத்திற்கு வரவேற்கிறோம், இயற்கையாக சுவையான எலுமிச்சைக்கான உங்கள் செல்லலாக்க. 2015 முதல் நாங்கள் எங்கள் அருமையான மலேசிய சமூதாயத்திற்கு சுத்தமாக பிழிந்த எலுமிச்சை, தூய வசந்த நீர் மற்றும் இயற்கை பொருட்களுடன் சேவை செய்து வருகிறோம். செயற்கை சுவைகள் இல்லை, வெறுக்கத்தக்க பைக்குளோரைட் இல்லை—நிரளமான, புதுமையான நன்மை மட்டுமே! ஒரு முறை ஒரு கிளாசில் சிரிப்பு மற்றும் தாகத்தை நிறுத்த நாங்கள் பிரতிশ்ருத்தம் செய்கிறோம். ஒவ்வொரு பாகமும் சந்தோஷம் சுவை! 😊" data-zh="👋 你好！欢迎来到新鲜柠檬水公司，您寻求天然美味柠檬水的首选之地。自2015年以来，我们一直为我们美妙的马来西亚社区服务，采用新鲜压榨的柠檬、纯净泉水和天然成分。没有人工香料，没有有害防腐剂——只有纯净、清爽的美好！我们致力于一次一杯地带来微笑和解渴。每一口都是幸福的滋味！😊">👋 Halo! Welcome to Fresh Lemonade Co., your go-to place for naturally delicious lemonade. We've been serving our wonderful Malaysian community since 2015 with freshly squeezed lemons, pure spring water, and natural ingredients. No artificial flavors, no nasty preservatives—just pure, refreshing goodness! We're committed to bringing smiles and quenching thirsts, one glass at a time. Every sip is a taste of happiness! 😊</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products">
+        <h2 data-en="Our Yummy Products" data-ms="Produk Yummy Kami" data-ta="எங்களின் சுவையான பொருட்கள்" data-zh="我们美味的产品">Our Yummy Products</h2>
+        <div class="products-grid">
+            <!-- Product 1 -->
+            <div class="product-card">
+                <div class="product-emoji">🍋</div>
+                <h3 data-en="Classic Lemonade" data-ms="Lemonade Klasik" data-ta="கிளாசிக் நெருஞ்சி" data-zh="经典柠檬水">Classic Lemonade</h3>
+                <p data-en="Our signature blend of fresh lemons, pure water, and a touch of natural sweetness. The perfect refresher!" data-ms="Campuran khas kami dari limau segar, air tulen, dan sentuhan manisan semula jadi. Penyegarnya yang sempurna!" data-ta="சுத்தமான எலுமிச்சை, பரிசுத்தமான நீர் மற்றும் இயற்கை இனிப்பான் தொட்டுக்கொண்ட எங்கள் கையெழுத்து கலவை. சிறந்த ப்ரீஃப்ரெஷர்!" data-zh="我们的招牌混合饮料由新鲜柠檬、纯净水和天然甜味组成。完美的清爽饮品！">Our signature blend of fresh lemons, pure water, and a touch of natural sweetness. The perfect refresher!</p>
+                <div class="price">RM 12.90</div>
+                <button class="buy-btn" data-en="Add to Cart 🛒" data-ms="Tambah ke Troli 🛒" data-ta="கார்டுக்கு சேர்க்க 🛒" data-zh="添加到购物车 🛒">Add to Cart 🛒</button>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="product-card">
+                <div class="product-emoji">🍓🍋</div>
+                <h3 data-en="Strawberry Splash" data-ms="Percikan Strawberi" data-ta="ஸ்ட்ராபெரி ஸ்பிளாஷ்" data-zh="草莓飞溅">Strawberry Splash</h3>
+                <p data-en="Fresh lemonade infused with juicy strawberries. Sweet, tangy, and absolutely irresistible!" data-ms="Lemonade segar infus dengan strawberi berair. Manis, asam, dan benar-benar tidak boleh ditolak!" data-ta="சுத்தமான பொறிகளுடன் தொட்ட புதிய நெருஞ்சி. இனிமையான, தীக்ஷ்ணமான, மற்றும் முற்றிலும் தடுக்க முடியாத!" data-zh="新鲜柠檬水中加入多汁的草莓。甜蜜、酸爽，绝对无法抗拒！">Fresh lemonade infused with juicy strawberries. Sweet, tangy, and absolutely irresistible!</p>
+                <div class="price">RM 14.90</div>
+                <button class="buy-btn" data-en="Add to Cart 🛒" data-ms="Tambah ke Troli 🛒" data-ta="கார்டுக்கு சேர்க்க 🛒" data-zh="添加到购物车 🛒">Add to Cart 🛒</button>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="product-card">
+                <div class="product-emoji">🥭🍋</div>
+                <h3 data-en="Mango Bliss" data-ms="Mangga Bahagia" data-ta="மாம்பழ ஆனந்தம்" data-zh="芒果极乐">Mango Bliss</h3>
+                <p data-en="Tropical vibes meet citrus perfection. Smooth mango combined with zesty lemon flavor—tropical paradise in a glass!" data-ms="Vibes tropis bertemu kesempurnaan sitrus. Mangga halus digabungkan dengan rasa limau yang bertenaga—surga tropis dalam gelas!" data-ta="வெப்பமண்ட வைப்கள் சிட்ரাস் பரிபூர்ணতை சந்திக்கின்றன. உருவ மாம்பழ பெறப்பட்ட நெருஞ்சி சுவையுடன்—கண்ணாடியில் வெப்பமண்ட சொர்க்கம்!" data-zh="热带风情与柑橘完美相遇。顺滑的芒果与浓郁的柠檬风味结合——玻璃杯中的热带天堂！">Tropical vibes meet citrus perfection. Smooth mango combined with zesty lemon flavor—tropical paradise in a glass!</p>
+                <div class="price">RM 14.90</div>
+                <button class="buy-btn" data-en="Add to Cart 🛒" data-ms="Tambah ke Troli 🛒" data-ta="கார்டுக்கு சேர்க்க 🛒" data-zh="添加到购物车 🛒">Add to Cart 🛒</button>
+            </div>
+
+            <!-- Product 4 -->
+            <div class="product-card">
+                <div class="product-emoji">🫐🍋</div>
+                <h3 data-en="Berry Mix" data-ms="Campuran Beri" data-ta="பெரி மிக்ஸ்" data-zh="浆果混合">Berry Mix</h3>
+                <p data-en="A delightful blend of blueberry, raspberry, and blackberry with our signature lemonade base. Berry good!" data-ms="Campuran indah blueberry, raspberry, dan blackberry dengan base lemonade khas kami. Sangat bagus!" data-ta="ப்ளூபெரி, ரஸ்பெரி மற்றும் கருப்பு பெரியுடன் உங்கள் கையெழுத்து நெருஞ்சி அடிதளத்துடன் மகிழ்ச்சியான கலவை. பெரியை நன்றாக!" data-zh="蓝莓、树莓和黑莓与我们的招牌柠檬水基地完美混合。太棒了！">A delightful blend of blueberry, raspberry, and blackberry with our signature lemonade base. Berry good!</p>
+                <div class="price">RM 15.90</div>
+                <button class="buy-btn" data-en="Add to Cart 🛒" data-ms="Tambah ke Troli 🛒" data-ta="கார்டுக்கு சேர்க்க 🛒" data-zh="添加到购物车 🛒">Add to Cart 🛒</button>
+            </div>
+
+            <!-- Product 5 -->
+            <div class="product-card">
+                <div class="product-emoji">🍑🍋</div>
+                <h3 data-en="Peachy Keen" data-ms="Ceria Peach" data-ta="பீச்சி கீன்" data-zh="蜜桃欢乐">Peachy Keen</h3>
+                <p data-en="Smooth peach meets refreshing lemon. A summer favorite that's perfect for those hot days!" data-ms="Peach halus bertemu limau yang menyegarkan. Favorit musim panas yang sempurna untuk hari-hari panas!" data-ta="மென்மையான பீச் சுத்தமான நெருஞ்சியை சந்திக்கிறது. வெப்பமான நாட்களுக்கு சிறந்த கோடை பிரিய!" data-zh="顺滑的桃子与清爽的柠檬相遇。完美的夏日最爱！">Smooth peach meets refreshing lemon. A summer favorite that's perfect for those hot days!</p>
+                <div class="price">RM 14.90</div>
+                <button class="buy-btn" data-en="Add to Cart 🛒" data-ms="Tambah ke Troli 🛒" data-ta="கார்டுக்கு சேர்க்க 🛒" data-zh="添加到购物车 🛒">Add to Cart 🛒</button>
+            </div>
+
+            <!-- Product 6 -->
+            <div class="product-card">
+                <div class="product-emoji">🥥🍋</div>
+                <h3 data-en="Coconut Paradise" data-ms="Surga Kelapa" data-ta="தேங்காய் சொர்க்கம்" data-zh="椰子天堂">Coconut Paradise</h3>
+                <p data-en="Creamy coconut meets tangy lemon in this tropical explosion. Island vibes in every sip!" data-ms="Kelapa kental bertemu limau asam dalam ledakan tropis ini. Vibes pulau di setiap tegukan!" data-ta="கோடையான தேங்காய் இந்த வெப்பமண்ட வெடிப்பில் தீக்ஷ்ணமான நெருஞ்சியை சந்திக்கிறது. ஒவ்வொரு பாகத்திலும் தீவு வைப்கள்!" data-zh="奶油椰子与酸性柠檬在这个热带爆炸中相遇。每一口都充满岛屿风情！">Creamy coconut meets tangy lemon in this tropical explosion. Island vibes in every sip!</p>
+                <div class="price">RM 15.90</div>
+                <button class="buy-btn" data-en="Add to Cart 🛒" data-ms="Tambah ke Troli 🛒" data-ta="கார்டுக்கு சேர்க்க 🛒" data-zh="添加到购物车 🛒">Add to Cart 🛒</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p data-en="💚 Fresh Lemonade Co. | Made with Love in Malaysia 🇲🇾" data-ms="💚 Fresh Lemonade Co. | Dibuat dengan Kasih di Malaysia 🇲🇾" data-ta="💚 பெற்ற எலுமிச்சை நிறுவனம் | மலேசியায் அன்புடன் செய்யப்பட்ட 🇲🇾" data-zh="💚 新鲜柠檬水公司 | 在马来西亚用爱制作 🇲🇾">💚 Fresh Lemonade Co. | Made with Love in Malaysia 🇲🇾</p>
+        <p data-en="📍 Find us at your nearest market or order online! | 📞 Call us: +603-XXXX-XXXX" data-ms="📍 Temukan kami di pasar terdekat atau pesan online! | 📞 Hubungi kami: +603-XXXX-XXXX" data-ta="📍 உங்கள் அருகிலான சந்தையில் எங்களைக் கண்டுபிடிக்கவும் அல்லது ஆன்லைனில் அர்ப்பணம் செய்யுங்கள்! | 📞 எங்களை அழைக்கவும்: +603-XXXX-XXXX" data-zh="📍 在您最近的市场找到我们或在线订购！ | 📞 致电我们：+603-XXXX-XXXX">📍 Find us at your nearest market or order online! | 📞 Call us: +603-XXXX-XXXX</p>
+        <p data-en="&copy; 2024 Fresh Lemonade Co. All rights reserved." data-ms="&copy; 2024 Fresh Lemonade Co. Semua hak terpelihara." data-ta="&copy; 2024 பெற்ற எலுமிச்சை நிறுவனம் சभी அधिकार सुरक्षित।" data-zh="&copy; 2024 新鲜柠檬水公司 版权所有">&copy; 2024 Fresh Lemonade Co. All rights reserved.</p>
+    </footer>
+
+    <script>
+        let currentLanguage = 'en';
+
+        // Toggle language dropdown
+        function toggleLanguageDropdown() {
+            const dropdown = document.getElementById('languageDropdown');
+            dropdown.classList.toggle('show');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const selector = document.querySelector('.language-selector');
+            if (!selector.contains(event.target)) {
+                document.getElementById('languageDropdown').classList.remove('show');
+            }
+        });
+
+        // Change language
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            
+            // Update button text
+            const langNames = {
+                'en': 'English',
+                'ms': 'Bahasa Melayu',
+                'ta': 'தமிழ்',
+                'zh': '中文'
+            };
+            document.getElementById('currentLang').textContent = langNames[lang];
+
+            // Update active button
+            document.querySelectorAll('.lang-option').forEach(opt => {
+                opt.classList.remove('active');
+            });
+            document.querySelector(`[data-lang="${lang}"]`).classList.add('active');
+
+            // Translate all elements
+            document.querySelectorAll('[data-en]').forEach(element => {
+                const attr = `data-${lang}`;
+                if (element.hasAttribute(attr)) {
+                    element.textContent = element.getAttribute(attr);
+                }
+            });
+
+            // Close dropdown
+            document.getElementById('languageDropdown').classList.remove('show');
+
+            // Save preference
+            localStorage.setItem('preferredLanguage', lang);
+        }
+
+        // Smooth scroll function
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            section.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Load saved language preference
+        window.addEventListener('load', () => {
+            const saved = localStorage.getItem('preferredLanguage');
+            if (saved) {
+                changeLanguage(saved);
+            }
+        });
+
+        // Add animation on scroll
+        window.addEventListener('scroll', () => {
+            const cards = document.querySelectorAll('.product-card');
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                if (rect.top < window.innerHeight * 0.8) {
+                    card.style.animation = 'slideUp 0.6s ease-out forwards';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
